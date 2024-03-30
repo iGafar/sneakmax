@@ -10,7 +10,7 @@ const MainBlock: FC = () => {
           Мы продаем кроссовки брендов Nike, Adidas, Puma, Reebok, Converse и
           многие другие по низким ценам
         </p>
-        <a href="#">Перейти к покупкам</a>
+        <a href="#catalog">Перейти к покупкам</a>
       </div>
     </MainBlockStyle>
   );
@@ -22,6 +22,11 @@ const MainBlockStyle = styled.section`
   color: var(--white);
   position: relative;
 
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+
   &:before {
     content: "SneakMax";
     position: absolute;
@@ -30,14 +35,14 @@ const MainBlockStyle = styled.section`
     transform: translate(-50%, -50%);
     font-family: "Intro", sans-serif;
     color: rgba(255, 255, 255, 0.12);
-    font-size: 200px;
+    font-size: max(20rem, 70px);
     font-weight: 700;
     line-height: 200px;
   }
 
   h1 {
     font-family: "Intro", sans-serif;
-    font-size: 36px;
+    font-size: max(3.6rem, 28px);
     max-width: 510px;
     line-height: 140%;
     margin-bottom: 20px;
@@ -57,6 +62,7 @@ const MainBlockStyle = styled.section`
     border-radius: 4px;
     background: var(--accent);
     padding: 22px 47px;
+    display: inline-block;
   }
 
   @media (min-width: 768px) {

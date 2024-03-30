@@ -9,3 +9,8 @@
   src: url("../fonts/intro_bold.woff2") format("woff2"),
     url("../fonts/intro_bold.woff") format("woff");
 }
+
+@font-face {
+  font-family: "Intro";
+  src: url();
+}
