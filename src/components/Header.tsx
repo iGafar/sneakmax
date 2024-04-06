@@ -7,13 +7,18 @@ interface IProps {
   setIsBasketOpen: () => void;
 }
 
-const navList: string[] = [
-  "Каталог",
-  "О нас",
-  "Подбор товара",
-  "Наша команда",
-  "Вопросы",
-  "Контакты",
+interface NavItem {
+  title: string;
+  id: string;
+}
+
+const navList: NavItem[] = [
+  { title: "Каталог", id: "catalog" },
+  { title: "О нас", id: "about" },
+  { title: "Подбор товара", id: "selection" },
+  { title: "Наша команда", id: "team" },
+  { title: "Вопросы", id: "questions" },
+  { title: "Контакты", id: "contacts" },
 ];
 
 const Header: FC<IProps> = memo(({ isOpen, setIsOpen, setIsBasketOpen }) => {
@@ -24,8 +29,8 @@ const Header: FC<IProps> = memo(({ isOpen, setIsOpen, setIsBasketOpen }) => {
           <p className="logo">SneakMax</p>
           <ul className={isOpen ? "list list-open" : "list"}>
             {navList.map((item) => (
-              <li key={item}>
-                <a href="#catalog">{item}</a>
+              <li key={item.id}>
+                <a href={`#${item.id}`}>{item.title}</a>
               </li>
             ))}
             <li>

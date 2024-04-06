@@ -1,13 +1,13 @@
 import Header from "./Header";
 import MainBlock from "./MainBlock";
-import CatalogBlock from "./Catalog/CatalogBlock";
-import SelectionBlock from "./Selection/SelectionBlock";
+import CatalogBlock from "./MainPage/Catalog/CatalogBlock";
+import SelectionBlock from "./MainPage/Selection/SelectionBlock";
 import AboutUsBlock from "./AboutUsBlock";
-import TeamBlock from "./Team/TeamBlock";
+import TeamBlock from "./MainPage/Team/TeamBlock";
 import ContactsBlock from "./ContactsBlock";
-import QuestionsBlock from "./Questions/QuestionsBlock";
+import QuestionsBlock from "./MainPage/Questions/QuestionsBlock";
 import Footer from "./Footer";
-import InstaBlock from "./Insta/InstaBlock";
+import InstaBlock from "./MainPage/Insta/InstaBlock";
 import BasketBlock from "./Basket/BasketBlock";
 
 export {

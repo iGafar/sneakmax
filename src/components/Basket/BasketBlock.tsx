@@ -69,12 +69,13 @@ const BasketBlockStyle = styled.div`
     background: rgb(255, 255, 255);
     max-width: 480px;
     padding-top: 10px;
+    max-height: 520px;
   }
 
   .list {
     padding: 0 20px;
     min-height: 200px;
-    max-height: 414px;
+    max-height: min(414px, 50vh);
     overflow: auto;
   }
 

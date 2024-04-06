@@ -1,18 +1,7 @@
 import { FC, useCallback, useState } from "react";
 import { createGlobalStyle } from "styled-components";
-import {
-  Header,
-  MainBlock,
-  CatalogBlock,
-  SelectionBlock,
-  AboutUsBlock,
-  TeamBlock,
-  QuestionsBlock,
-  ContactsBlock,
-  Footer,
-  InstaBlock,
-  BasketBlock,
-} from "./components";
+import { Header, MainBlock, Footer, BasketBlock } from "./components";
+import Router from "./router/Router";
 
 const App: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -38,13 +27,7 @@ const App: FC = () => {
       <main>
         {isBasketOpen && <BasketBlock setIsBasketOpen={isBasketOpenCallback} />}
         <MainBlock />
-        <CatalogBlock />
-        <AboutUsBlock />
-        <SelectionBlock />
-        <TeamBlock />
-        <QuestionsBlock />
-        <ContactsBlock />
-        <InstaBlock />
+        <Router />
       </main>
       <Footer />
     </>

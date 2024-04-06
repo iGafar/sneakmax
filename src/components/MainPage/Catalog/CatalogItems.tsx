@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
-import CatalogCart from "./CatalogCart";
+import CatalogCart from "./CatalogCard";
 
 const CatalogItems: FC = () => {
   return (
@@ -13,7 +13,7 @@ const CatalogItems: FC = () => {
         <CatalogCart />
         <CatalogCart />
       </ul>
-      <button>Показать еще</button>
+      <button className="more">Показать еще</button>
     </CatalogItemsStyle>
   );
 };
@@ -30,7 +30,7 @@ const CatalogItemsStyle = styled.div`
     margin-bottom: 40px;
   }
 
-  button {
+  .more {
     color: rgb(255, 255, 255);
     font-family: "Intro", sans-serif;
     font-size: 16px;
