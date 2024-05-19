@@ -1,5 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { Btn } from ".";
 
 const MainBlock: FC = () => {
   return (
@@ -10,7 +11,9 @@ const MainBlock: FC = () => {
           Мы продаем кроссовки брендов Nike, Adidas, Puma, Reebok, Converse и
           многие другие по низким ценам
         </p>
-        <a href="#catalog">Перейти к покупкам</a>
+        <a href="#catalog">
+          <Btn>Перейти к покупкам</Btn>
+        </a>
       </div>
     </MainBlockStyle>
   );
@@ -53,16 +56,6 @@ const MainBlockStyle = styled.section`
     max-width: 480px;
     line-height: 140%;
     margin-bottom: 40px;
-  }
-
-  a {
-    font-family: "Intro", sans-serif;
-    font-size: 16px;
-    line-height: 16px;
-    border-radius: 4px;
-    background: var(--accent);
-    padding: 22px 47px;
-    display: inline-block;
   }
 
   @media (min-width: 768px) {

@@ -1,35 +1,49 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { ISneakers } from "../../store/types";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { delBasket } from "../../store/slices/basketSlice";
 
-const BasketCard: FC = () => {
+interface IProps {
+  isPage?: boolean;
+  item: ISneakers;
+}
+
+const BasketCard: FC<IProps> = ({ isPage, item }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   return (
-    <BasketCardStyle>
+    <BasketCardStyle $isPage={isPage}>
       <picture>
-        <img src="./images/sneakers.jpeg" alt="кроcсовки" />
+        <img src={item.imgUrl} alt={item.title} />
       </picture>
       <div>
-        <h3 className="title">Женские кроссовки Puma Force 1 Shadow</h3>
-        <p className="price">8 678 ₽</p>
+        <h3 className="title">{item.title}</h3>
+        <p className="price">{item.price} ₽</p>
       </div>
-      <button>
+      <button onClick={() => dispatch(delBasket(item.id))}>
         <img src="./icons/trash.svg" alt="trash" />
       </button>
     </BasketCardStyle>
   );
 };
 
-const BasketCardStyle = styled.li`
+const BasketCardStyle = styled.li<{ $isPage: boolean | undefined }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   gap: 10px;
-  margin-bottom: 25px;
+  margin-bottom: ${(props) => (props.$isPage ? "15px" : "25px")};
+  ${(props) => props.$isPage && "padding: 15px 0;"}
 
   picture {
     width: 100px;
-    height: 100px;
+    height: ${(props) => (props.$isPage ? "45px" : "100px")};
     overflow: hidden;
+    display: flex;
+    align-items: center;
 
     img {
       width: 100%;
@@ -52,8 +66,9 @@ const BasketCardStyle = styled.li`
   }
 
   button {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
 
     &:hover {
       border-radius: 4px;

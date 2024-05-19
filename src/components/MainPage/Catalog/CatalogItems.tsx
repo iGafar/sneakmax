@@ -1,19 +1,47 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
-import CatalogCart from "./CatalogCard";
+import Btn from "../../ui/Btn";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../store/store";
+import { fetchSneakers } from "../../../store/slices/sneakersSlice";
+import CatalogCard from "./CatalogCard";
+import { ISneakers } from "../../../store/types";
+import { changeLimit } from "../../../store/slices/dataSlice";
 
-const CatalogItems: FC = () => {
+interface IProps {
+  gender: string;
+}
+
+const CatalogItems: FC<IProps> = ({ gender }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const sneakers = useSelector<RootState, ISneakers[]>(
+    (state) => state.sneakers.data
+  );
+  const limit = useSelector<RootState, number>((state) => state.data.limit);
+
+  React.useEffect(() => {
+    dispatch(
+      fetchSneakers({
+        priceFrom: 0,
+        priceTo: 99999,
+        gender: gender,
+        sizes: [],
+      })
+    );
+  }, [dispatch, gender, limit]);
+
   return (
     <CatalogItemsStyle>
       <ul>
-        <CatalogCart />
-        <CatalogCart />
-        <CatalogCart />
-        <CatalogCart />
-        <CatalogCart />
-        <CatalogCart />
+        {sneakers
+          .filter((_, index) => index < limit)
+          .map((item: ISneakers) => (
+            <CatalogCard key={item.id} item={item} />
+          ))}
       </ul>
-      <button className="more">Показать еще</button>
+      <Btn fnc={() => dispatch(changeLimit())} total={limit >= sneakers.length}>
+        Показать еще
+      </Btn>
     </CatalogItemsStyle>
   );
 };
@@ -21,6 +49,7 @@ const CatalogItems: FC = () => {
 const CatalogItemsStyle = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   ul {
     display: flex;
@@ -28,25 +57,6 @@ const CatalogItemsStyle = styled.div`
     flex-wrap: wrap;
     gap: 20px;
     margin-bottom: 40px;
-  }
-
-  .more {
-    color: rgb(255, 255, 255);
-    font-family: "Intro", sans-serif;
-    font-size: 16px;
-    line-height: 16px;
-    border-radius: 4px;
-    background-color: var(--accent);
-    padding: 22px 47px;
-    margin: 0 auto;
-
-    &:hover {
-      background: var(--accent-hover);
-    }
-
-    &:active {
-      background: var(--accent-active);
-    }
   }
 `;
 

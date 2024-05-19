@@ -1,39 +1,31 @@
 import Nouislider from "nouislider-react";
-import { FC, useState } from "react";
+import { FC } from "react";
 import styled from "styled-components";
 import "nouislider/distribute/nouislider.css";
+import { IFilterProps } from "./types";
+import { UseFormSetValue } from "react-hook-form";
+import { IFormData } from "./CatalogFilter";
 
-const PriceFilter: FC = () => {
-  const [startPrice, setStartPrice] = useState<string>("0");
-  const [endPrice, setEndPrice] = useState<string>("9999");
+interface IProps extends IFilterProps {
+  setValue: UseFormSetValue<IFormData>;
+}
 
+const PriceFilter: FC<IProps> = ({ register, setValue }) => {
   return (
     <PriceFilterStyle>
       <h4>Цена, руб</h4>
       <div className="filter">
-        <input
-          type="number"
-          min={startPrice}
-          max={endPrice}
-          value={`${Math.floor(+startPrice)}`}
-          onChange={(e) => setStartPrice(e.target.value)}
-        />
-        <input
-          type="number"
-          min={startPrice}
-          max={endPrice}
-          value={`${Math.floor(+endPrice)}`}
-          onChange={(e) => setEndPrice(e.target.value)}
-        />
+        <input type="number" min={0} max={99999} {...register("startPrice")} />
+        <input type="number" min={0} max={99999} {...register("endPrice")} />
         <Nouislider
-          range={{ min: 0, max: 9999 }}
-          start={[startPrice, endPrice]}
+          range={{ min: 0, max: 99999 }}
+          start={[0, 99999]}
           orientation="horizontal"
           connect
           step={1}
           onChange={([start, end]) => {
-            setStartPrice(start);
-            setEndPrice(end);
+            setValue("startPrice", Math.round(start));
+            setValue("endPrice", Math.round(end));
           }}
         />
       </div>

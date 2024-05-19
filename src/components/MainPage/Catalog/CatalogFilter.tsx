@@ -3,22 +3,71 @@ import styled from "styled-components";
 import PriceFilter from "./PriceFilter";
 import GenderFilter from "./GenderFilter";
 import SizesFilter from "./SizesFilter";
+import { useDispatch } from "react-redux";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { fetchSneakers } from "../../../store/slices/sneakersSlice";
+import { AppDispatch } from "../../../store/store";
+import { getBaseLimit } from "../../../store/slices/dataSlice";
 
 interface IProps {
   isOpen: boolean;
+  setGender: (gender: string) => void;
 }
 
-const CatalogFilter: FC<IProps> = ({ isOpen }) => {
+export interface IFormData {
+  startPrice: number;
+  endPrice: number;
+  gender: string;
+  sizes: number[];
+}
+
+const CatalogFilter: FC<IProps> = ({ isOpen, setGender }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { register, handleSubmit, setValue } = useForm<IFormData>({
+    defaultValues: {
+      startPrice: 0,
+      endPrice: 99999,
+      gender: "",
+      sizes: [],
+    },
+  });
+
+  const onSubmit: SubmitHandler<IFormData> = (data) => {
+    setGender(data.gender);
+
+    dispatch(
+      fetchSneakers({
+        priceFrom: data.startPrice,
+        priceTo: data.endPrice,
+        gender: data.gender,
+        sizes: data.sizes,
+      })
+    );
+  };
+
   return (
-    <CatalogFilterStyle className={isOpen ? "open" : ""}>
+    <CatalogFilterStyle
+      className={isOpen ? "open" : ""}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div>
         <h3>Подбор по параметрам</h3>
       </div>
-      <PriceFilter />
-      <GenderFilter />
-      <SizesFilter />
-      <button type="button">Применить</button>
-      <button type="reset">Сбросить</button>
+      <PriceFilter register={register} setValue={setValue} />
+      <GenderFilter setValue={setValue} />
+      <SizesFilter setValue={setValue} />
+      <button type="submit" onClick={() => dispatch(getBaseLimit())}>
+        Применить
+      </button>
+      <button
+        type="reset"
+        onClick={() =>
+          onSubmit({ startPrice: 0, endPrice: 99999, gender: "", sizes: [0] })
+        }
+      >
+        Сбросить
+      </button>
     </CatalogFilterStyle>
   );
 };
@@ -56,7 +105,7 @@ const CatalogFilterStyle = styled.form`
     margin-bottom: 6px;
   }
 
-  button[type="button"] {
+  button[type="submit"] {
     color: var(--white);
     font-family: "Intro", sans-serif;
     font-size: 16px;
@@ -94,6 +143,7 @@ const CatalogFilterStyle = styled.form`
     position: absolute;
     left: -100%;
     transition: all 200ms linear;
+    z-index: 2;
 
     &.open {
       left: 20px;

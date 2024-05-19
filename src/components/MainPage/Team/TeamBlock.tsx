@@ -1,56 +1,28 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import TeamCard from "./TeamCard";
-
-export interface ITeam {
-  id: number;
-  imgUrl: string;
-  name: string;
-  role: string;
-}
-
-const teamData: ITeam[] = [
-  {
-    id: 1,
-    imgUrl: "./images/team1.jpeg",
-    name: "Максим Золотарев",
-    role: "Администратор",
-  },
-  {
-    id: 2,
-    imgUrl: "./images/team1.jpeg",
-    name: "Максим Золотарев",
-    role: "Администратор",
-  },
-  {
-    id: 3,
-    imgUrl: "./images/team1.jpeg",
-    name: "Максим Золотарев",
-    role: "Администратор",
-  },
-  {
-    id: 4,
-    imgUrl: "./images/team1.jpeg",
-    name: "Максим Золотарев",
-    role: "Администратор",
-  },
-  {
-    id: 5,
-    imgUrl: "./images/team1.jpeg",
-    name: "Максим Золотарев",
-    role: "Администратор",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../store/store";
+import { fetchTeam } from "../../../store/slices/teamSlice";
+import { ITeam } from "../../../store/types";
 
 const TeamBlock: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const teamData = useSelector<RootState, ITeam[]>((state) => state.team.data);
+
+  React.useEffect(() => {
+    dispatch(fetchTeam());
+  }, [dispatch]);
+
   return (
     <TeamBlockStyle id="team">
       <div className="container">
         <h2>Наша команда</h2>
         <ul>
-          {teamData.map((item) => (
-            <TeamCard data={item} key={item.id} />
-          ))}
+          {teamData &&
+            teamData.map((item: ITeam) => (
+              <TeamCard data={item} key={item.id} />
+            ))}
         </ul>
       </div>
     </TeamBlockStyle>

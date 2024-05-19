@@ -1,6 +1,8 @@
 import { FC } from "react";
 import styled from "styled-components";
-import BasketCard from "./BasketCard";
+import { Link } from "react-router-dom";
+import BasketList from "./BasketList";
+import Btn from "../ui/Btn";
 
 interface IProps {
   setIsBasketOpen: () => void;
@@ -12,28 +14,16 @@ const BasketBlock: FC<IProps> = ({ setIsBasketOpen }) => {
       <div className="container">
         <div className="back" onClick={() => setIsBasketOpen()}></div>
         <div className="basket">
-          <ul className="list">
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-            <BasketCard />
-          </ul>
-          <div className="info">
+          <BasketList isBasketOpen />
+          <InfoStyle>
             <div>
               <h5>Итого:</h5>
               <p>25 789 ₽</p>
             </div>
-            <button>Перейти в корзину</button>
-          </div>
+            <Link to="basket">
+              <Btn fnc={setIsBasketOpen}>Перейти в корзину</Btn>
+            </Link>
+          </InfoStyle>
         </div>
       </div>
     </BasketBlockStyle>
@@ -67,48 +57,31 @@ const BasketBlockStyle = styled.div`
     top: 0;
     box-shadow: 0px -4px 10px 0px rgba(0, 13, 84, 0.1);
     background: rgb(255, 255, 255);
-    max-width: 480px;
+    min-width: 480px;
     padding-top: 10px;
     max-height: 520px;
   }
+`;
 
-  .list {
-    padding: 0 20px;
-    min-height: 200px;
-    max-height: min(414px, 50vh);
-    overflow: auto;
+const InfoStyle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px 13px;
+  box-shadow: 0px -4px 10px 0px rgba(0, 13, 84, 0.1);
+  background: rgb(255, 255, 255);
+
+  h5 {
+    color: rgb(77, 77, 77);
+    font-size: 14px;
+    line-height: 20px;
   }
 
-  .info {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 20px 13px;
-    box-shadow: 0px -4px 10px 0px rgba(0, 13, 84, 0.1);
-    background: rgb(255, 255, 255);
-
-    h5 {
-      color: rgb(77, 77, 77);
-      font-size: 14px;
-      line-height: 20px;
-    }
-
-    p {
-      color: rgb(77, 77, 77);
-      font-family: "Intro";
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 20px;
-    }
-
-    button {
-      color: rgb(255, 255, 255);
-      font-family: "Intro";
-      font-size: 16px;
-      line-height: 16px;
-      border-radius: 4px;
-      background: var(--accent);
-      padding: 22px 47px;
-    }
+  p {
+    color: rgb(77, 77, 77);
+    font-family: "Intro";
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
   }
 `;
 

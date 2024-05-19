@@ -1,9 +1,13 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { createGlobalStyle } from "styled-components";
-import { Header, MainBlock, Footer, BasketBlock } from "./components";
+import { Header, MainBlock, BasketBlock } from "./components";
 import Router from "./router/Router";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "./store/store";
+import { fetchBasket } from "./store/slices/basketSlice";
 
 const App: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isBasketOpen, setIsBasketOpen] = useState<boolean>(false);
 
@@ -15,6 +19,10 @@ const App: FC = () => {
     () => setIsBasketOpen(!isBasketOpen),
     [isBasketOpen]
   );
+
+  useEffect(() => {
+    dispatch(fetchBasket());
+  }, [dispatch]);
 
   return (
     <>
@@ -29,7 +37,6 @@ const App: FC = () => {
         <MainBlock />
         <Router />
       </main>
-      <Footer />
     </>
   );
 };

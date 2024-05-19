@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
-import { ITeam } from "./TeamBlock";
+import { ITeam } from "../../../store/types";
 
 interface IProps {
   data: ITeam;
@@ -31,7 +31,6 @@ const TeamCardStyle = styled.li`
 
     img {
       width: 100%;
-      height: 100%;
     }
   }
 

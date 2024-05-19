@@ -1,15 +1,39 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { UseFormSetValue } from "react-hook-form";
+import { IFormData } from "./CatalogFilter";
 
-const GenderFilter: FC = () => {
+interface IProps {
+  setValue: UseFormSetValue<IFormData>;
+}
+
+const genders = [
+  {
+    value: "Мужской",
+    label: "male",
+  },
+  {
+    value: "Женский",
+    label: "female",
+  },
+];
+
+const GenderFilter: FC<IProps> = ({ setValue }) => {
   return (
     <GenderFilterStyle>
       <h4>Пол</h4>
       <div className="filter">
-        <input type="radio" name="gender" id="male" />
-        <label htmlFor="male">Мужской</label>
-        <input type="radio" name="gender" id="female" />
-        <label htmlFor="female">Женский</label>
+        {genders.map((gender) => (
+          <div key={gender.label}>
+            <input
+              type="radio"
+              id={gender.label}
+              name="gender"
+              onChange={() => setValue("gender", gender.value)}
+            />
+            <label htmlFor={gender.label}>{gender.value}</label>
+          </div>
+        ))}
       </div>
     </GenderFilterStyle>
   );
@@ -22,6 +46,11 @@ const GenderFilterStyle = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    div {
+      display: flex;
+      align-items: center;
+    }
 
     input {
       visibility: hidden;

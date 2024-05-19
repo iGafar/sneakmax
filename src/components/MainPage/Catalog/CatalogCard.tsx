@@ -1,29 +1,41 @@
 import { FC, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { ISneakers } from "../../../store/types";
+import { AppDispatch } from "../../../store/store";
+import { postBasket } from "../../../store/slices/basketSlice";
 
-const CatalogCard: FC = () => {
+interface IProps {
+  item: ISneakers;
+}
+
+const CatalogCard: FC<IProps> = ({ item }) => {
+  const dispatch = useDispatch<AppDispatch>();
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   return (
-    <CatalogCardStyle $isOpenModal={isOpenModal}>
-      <div
-        className={isOpenModal ? "modal modal-open" : "modal"}
-        onClick={() => setIsOpenModal((prev) => !prev)}
-      >
+    <CatalogCardStyle
+      $isOpenModal={isOpenModal}
+      onClick={() => setIsOpenModal((prev) => !prev)}
+    >
+      <div className={isOpenModal ? "modal modal-open" : "modal"}>
         <div className="options">
-          <button className="show">
-            <img src="./icons/show.svg" alt="show sneakers" />
-          </button>
-          <button className="add">
+          <Link to={`/card/${item.id}`} className="show">
+            <button>
+              <img src="./icons/show.svg" alt="show sneakers" />
+            </button>
+          </Link>
+          <button className="add" onClick={() => dispatch(postBasket(item))}>
             <img src="./icons/add-to-basket.svg" alt="add to basket" />
           </button>
         </div>
         <picture>
-          <img src="./images/sneakers.jpeg" alt="sneakers" />
+          <img src={item.imgUrl} alt={item.title} />
         </picture>
       </div>
-      <h3>Кроссовки Nike Air Force 1 '07 QS</h3>
-      <p>11 000 р₽</p>
+      <h3>{item.title}</h3>
+      <p>{item.price} ₽</p>
     </CatalogCardStyle>
   );
 };
@@ -62,7 +74,7 @@ const CatalogCardStyle = styled.li<{ $isOpenModal: boolean }>`
   }
 
   @media (min-width: 810px) {
-    .options:hover {
+    &:hover .options {
       opacity: 1;
     }
   }
@@ -71,10 +83,6 @@ const CatalogCardStyle = styled.li<{ $isOpenModal: boolean }>`
     .options {
       opacity: ${(props) => (props.$isOpenModal ? 1 : 0)};
     }
-  }
-
-  .options:focus {
-    opacity: 1;
   }
 
   picture {

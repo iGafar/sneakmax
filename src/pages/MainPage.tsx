@@ -7,6 +7,7 @@ import {
   QuestionsBlock,
   ContactsBlock,
   InstaBlock,
+  Footer,
 } from "../components";
 
 const MainPage: FC = () => {
@@ -19,6 +20,7 @@ const MainPage: FC = () => {
       <QuestionsBlock />
       <ContactsBlock />
       <InstaBlock />
+      <Footer />
     </>
   );
 };

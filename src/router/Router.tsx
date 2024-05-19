@@ -7,7 +7,7 @@ const Router: FC = () => {
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/basket" element={<BasketPage />} />
-      <Route path="/card" element={<CardPage />} />
+      <Route path="/card/:id" element={<CardPage />} />	
     </Routes>
   );
 };

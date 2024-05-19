@@ -5,6 +5,7 @@ import CatalogItems from "./CatalogItems";
 
 const CatalogBlock: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [gender, setGender] = useState<string>("");
 
   return (
     <CatalogBlockStyle id="catalog">
@@ -21,8 +22,8 @@ const CatalogBlock: FC = () => {
           </button>
         </div>
         <div className="content">
-          <CatalogFilter isOpen={isOpen} />
-          <CatalogItems />
+          <CatalogFilter isOpen={isOpen} setGender={setGender} />
+          <CatalogItems gender={gender} />
         </div>
       </div>
     </CatalogBlockStyle>

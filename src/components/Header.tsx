@@ -1,5 +1,7 @@
 import { FC, memo } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { RootState } from "../store/store";
 
 interface IProps {
   isOpen: boolean;
@@ -22,6 +24,10 @@ const navList: NavItem[] = [
 ];
 
 const Header: FC<IProps> = memo(({ isOpen, setIsOpen, setIsBasketOpen }) => {
+  const basketLength = useSelector<RootState, number>(
+    (state) => state.basket.data.length
+  );
+
   return (
     <HeaderStyle onClick={() => setIsOpen()}>
       <div className="container">
@@ -36,7 +42,7 @@ const Header: FC<IProps> = memo(({ isOpen, setIsOpen, setIsBasketOpen }) => {
             <li>
               <button onClick={() => setIsBasketOpen()}>
                 Корзина <img src="./icons/basket.svg" alt="корзина" />
-                <span>1</span>
+                <span>{basketLength}</span>
               </button>
             </li>
           </ul>

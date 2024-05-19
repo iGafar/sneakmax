@@ -1,5 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
+import Btn from "../../ui/Btn";
 
 interface IProps {
   setPage: (page: number) => void;
@@ -12,9 +13,7 @@ const SelectionForm: FC<IProps> = ({ setPage }) => {
       <p>Получите подборку подходящих для вас моделей на почту</p>
       <input required type="text" placeholder="Ваше имя" />
       <input required type="text" placeholder="E-mail" />
-      <button type="submit" onClick={() => setPage(5)}>
-        Получить
-      </button>
+      <Btn fnc={() => setPage(5)}>Получить</Btn>
     </SelectionFormStyle>
   );
 };
@@ -52,24 +51,6 @@ const SelectionFormStyle = styled.form`
 
     &:last-of-type {
       margin-bottom: 20px;
-    }
-  }
-
-  button {
-    padding: 22px 74px;
-    border-radius: 4px;
-    background-color: var(--accent);
-    color: rgb(255, 255, 255);
-    font-family: "Intro";
-    font-size: 16px;
-    line-height: 16px;
-
-    &:hover {
-      background-color: var(--accent-hover);
-    }
-
-    &:active {
-      background: var(--accent-active);
     }
   }
 `;

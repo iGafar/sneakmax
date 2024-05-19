@@ -1,20 +1,40 @@
-import { FC } from "react";
+import { FC, useState } from "react";
+import { UseFormSetValue } from "react-hook-form";
 import styled from "styled-components";
+import { IFormData } from "./CatalogFilter";
 
-const sizes = [35, 36, 37, 38, 39, 40, 41, 42, 43];
+const sizesData = [35, 36, 37, 38, 39, 40, 41, 42, 43];
 
-const SizesFilter: FC = () => {
+interface IProps {
+  setValue: UseFormSetValue<IFormData>;
+}
+
+const SizesFilter: FC<IProps> = ({ setValue }) => {
+  const [selectedSizes, setSelectedSizes] = useState<number[]>([]);
+
+  const handleSizeChange = (size: number) => {
+    console.log(selectedSizes);
+    setSelectedSizes((prevSelectedSizes) => {
+      const newSizes = prevSelectedSizes.includes(size)
+        ? prevSelectedSizes.filter((s) => s !== size)
+        : [...prevSelectedSizes, size];
+      setValue("sizes", newSizes);
+      return newSizes;
+    });
+  };
+
   return (
     <SizesFilterStyle>
       <h4>Размер</h4>
 
       <ul className="filter">
-        {sizes.map((size) => (
+        {sizesData.map((size) => (
           <li key={size}>
             <input
               type="checkbox"
-              name={size.toString()}
               id={size.toString()}
+              name="sizes"
+              onChange={() => handleSizeChange(size)}
             />
             <label htmlFor={size.toString()}>{size.toString()}</label>
           </li>

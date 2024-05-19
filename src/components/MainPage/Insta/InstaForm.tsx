@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
+import Btn from "../../ui/Btn";
 
 interface IUser {
   name: string;
@@ -29,7 +30,7 @@ const InstaForm: FC = () => {
         placeholder="Номер телефона"
         {...register("tel")}
       />
-      <button type="submit">Отправить</button>
+      <Btn>Отправить</Btn>
     </InstaFormStyle>
   );
 };
@@ -68,21 +69,7 @@ const InstaFormStyle = styled.form`
   }
 
   button {
-    padding: 22px 47px;
-    border-radius: 4px;
-    background-color: var(--accent);
-    color: rgb(255, 255, 255);
-    font-family: "Intro";
-    font-size: 16px;
-    line-height: 16px;
-
-    &:hover {
-      background: var(--accent-hover);
-    }
-
-    &:active {
-      background: var(--accent-active);
-    }
+    width: 100%;
   }
 `;
 
